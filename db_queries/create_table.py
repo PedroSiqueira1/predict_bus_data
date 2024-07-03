@@ -1,3 +1,10 @@
+from sqlalchemy import create_engine
+from sqlalchemy import text
+import os
+
+database_url = os.getenv("DATABASE_URL")
+engine = create_engine(database_url, client_encoding='latin-1')  
+
 # Create the table if it does not exist
 create_table_query = """
 CREATE TABLE IF NOT EXISTS bus_positions (
@@ -17,5 +24,3 @@ CREATE TABLE IF NOT EXISTS bus_positions (
 with engine.connect() as conn:
     conn.execute(text(create_table_query))
 
-# Process all JSON files in the main folder
-process_folder(main_folder_path, engine)
